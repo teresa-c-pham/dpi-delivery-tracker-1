@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  get("/", { :controller => "deliveries", :action => "sign_in" })
+  # get("/", { :controller => "deliveries", :action => "sign_in" })
   
   root "deliveries#sign_in"
 
@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   get("/deliveries/:path_id", { :controller => "deliveries", :action => "show" })
   
   # UPDATE
-  
   post("/modify_delivery/:path_id", { :controller => "deliveries", :action => "update" })
   
   # DELETE

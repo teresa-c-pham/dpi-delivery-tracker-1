@@ -1,7 +1,12 @@
 class DeliveriesController < ApplicationController
   def sign_in
-    redirect_to("/users/sign_in")
+    if current_user == nil
+      redirect_to("/users/sign_in")
+    else
+      redirect_to("/deliveries")
+    end
   end
+  
   def index
     matching_deliveries = Delivery.all
 

@@ -11,6 +11,13 @@
   </head>
 
   <body>
+    <a href="/users/sign_up">Sign up</a> | <a href="/users/sign_in">Sign in</a>
+    <hr>
+    
+    <% if (current_user == nil) %>
+    <p>You need to sign in or sign up before continuing.</p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
