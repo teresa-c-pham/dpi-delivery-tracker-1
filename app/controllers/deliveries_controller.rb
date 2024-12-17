@@ -3,14 +3,14 @@ class DeliveriesController < ApplicationController
     if current_user == nil
       redirect_to("/users/sign_in")
     else
-      redirect_to("/deliveries")
+      redirect_to("/deliveries", :notice => "Signed in successfully.")
     end
   end
   
   def index
     matching_deliveries = Delivery.all
 
-    @list_of_deliveries = matching_deliveries.order({ :created_at => :desc })
+    @list_of_deliveries = matching_deliveries.order({ :supposed_to_arrive_on => :asc })
 
     render({ :template => "deliveries/index" })
   end
@@ -50,12 +50,13 @@ class DeliveriesController < ApplicationController
     the_delivery.details = params.fetch("query_details")
     the_delivery.supposed_to_arrive_on = params.fetch("query_supposed_to_arrive_on")
     the_delivery.arrived = params.fetch("query_arrived", false)
+    the_delivery.arrived = true
 
     if the_delivery.valid?
       the_delivery.save
-      redirect_to("/deliveries/#{the_delivery.id}", { :notice => "Delivery updated successfully."} )
+      redirect_to("/deliveries", { :notice => "Marked as received."} )
     else
-      redirect_to("/deliveries/#{the_delivery.id}", { :alert => the_delivery.errors.full_messages.to_sentence })
+      redirect_to("/deliveries", { :alert => the_delivery.errors.full_messages.to_sentence })
     end
   end
 
